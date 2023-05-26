@@ -5,8 +5,8 @@ using namespace std;
 
 // } Driver Code Ends
 
-  
-  
+        
+        
  class Solution {
 public:
     long long merge(long long arr[], int left, int mid, int right) {
@@ -32,7 +32,7 @@ public:
             } else {
                 arr[k] = b[j];
                 j++;
-                invCount += n1 - i;
+                invCount += n1 - i; //inversion count
             }
             k++;
         }
@@ -67,8 +67,7 @@ public:
         return mergeSort(arr, 0, n - 1);
     }
 };
-
-  
+    
 
 //{ Driver Code Starts.
 
