@@ -6,9 +6,9 @@ public:
         while (x != 0) {
             int digit = x % 10;
             // Check for potential overflow before updating the answer
-            if (ans > INT_MAX / 10 || (ans == INT_MAX / 10 && digit > 8))
+            if (ans > INT_MAX / 10 || (ans == INT_MAX / 10 && digit > 9))
                 return 0;
-            if (ans < INT_MIN / 10 || (ans == INT_MIN / 10 && digit < -8))
+            if (ans < INT_MIN / 10 || (ans == INT_MIN / 10 && digit < -9))
                 return 0;
 else{
             ans = ans * 10 + digit;
