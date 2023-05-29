@@ -1,3 +1,19 @@
+// class ParkingSystem {
+// public:
+//     ParkingSystem(int big, int medium, int small) {
+        
+//     }
+    
+//     bool addCar(int carType) {
+        
+//     }
+// };
+
+/**
+ * Your ParkingSystem object will be instantiated and called as such:
+ * ParkingSystem* obj = new ParkingSystem(big, medium, small);
+ * bool param_1 = obj->addCar(carType);
+ */
 class ParkingSystem {
 private:
     int availableSlots[4];  // Index 0 is not used, 1 represents big, 2 represents medium, 3 represents small.
