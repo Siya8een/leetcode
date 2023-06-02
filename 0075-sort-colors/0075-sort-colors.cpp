@@ -1,29 +1,24 @@
 class Solution {
 public:
+    //THREE POINTER APPROACH
     void sortColors(vector<int>& nums) {
-        int count0 = 0;
-        int count1 = 0;
-        int count2 = 0;
-        
-        for (int i = 0; i < nums.size(); i++) {
-            if (nums[i] == 0) {
-                count0++;
-            } else if (nums[i] == 1) {
-                count1++;
-            } else if (nums[i] == 2) {
-                count2++;
+        int l = 0;
+        int m = 0;
+        int h = nums.size()-1;
+
+        while(m<=h){
+            if(nums[m]==0){
+                swap(nums[l], nums[m]);
+                l++;
+                m++;
             }
-        }
-        
-        int index = 0;
-        for (int i = 0; i < count0; i++) {
-            nums[index++] = 0;
-        }
-        for (int i = 0; i < count1; i++) {
-            nums[index++] = 1;
-        }
-        for (int i = 0; i < count2; i++) {
-            nums[index++] = 2;
+            else if(nums[m]==1){
+                m++;
+            }
+            else if(nums[m]==2){
+                swap(nums[m], nums[h]);
+                h--;
+            }
         }
     }
 };
