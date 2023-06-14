@@ -1,42 +1,39 @@
-
- 
-        
-    
-
-
 class Solution {
 public:
-    vector<vector<int> > threeSum(vector<int> &num) {
-        vector<vector<int> > result;
-        std::sort(num.begin(), num.end());
-        for (int i = 0; i < num.size(); i++) {
-            int target = -num[i];
-            int front = i + 1;
-            int back = num.size() - 1;
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> ans;
 
-            while (front < back) {
-                int sum = num[front] + num[back];
-                // Finding answer which start from number num[i]
-                if (sum < target)
-                    front++;
-                else if (sum > target)
-                    back--;
-                else {
-                    vector<int> triplet = {num[i], num[front], num[back]};
-                    result.push_back(triplet);
-        
-                    // Processing duplicates of Number 2
-                    // Rolling the front pointer to the next different number forwards
-                    while (front < back && num[front] == triplet[1]) front++;
-                    // Processing duplicates of Number 3
-                    // Rolling the back pointer to the next different number backwards
-                    while (front < back && num[back] == triplet[2]) back--;
-                }    
+        sort(nums.begin(), nums.end());  // Sort the input array in ascending order
+
+        for (int i = 0; i < n - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1])  // Skip duplicate elements
+                continue;
+
+            int left = i + 1;
+            int right = n - 1;
+
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+
+                if (sum == 0) {
+                    ans.push_back({nums[i], nums[left], nums[right]});
+
+                    while (left < right && nums[left] == nums[left + 1])  // Skip duplicate elements
+                        left++;
+                    while (left < right && nums[right] == nums[right - 1])  // Skip duplicate elements
+                        right--;
+
+                    left++;
+                    right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    right--;
+                }
             }
-            // Processing duplicates of Number 1
-            while (i + 1 < num.size() && num[i + 1] == num[i]) 
-                i++;
         }
-        return result;
+
+        return ans;
     }
 };
