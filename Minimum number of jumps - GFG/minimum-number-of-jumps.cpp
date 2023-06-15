@@ -6,6 +6,8 @@ using namespace std;
 // } Driver Code Ends
 // Function to return minimum number of jumps to end of array
 
+
+
 class Solution {
 public:
     int minJumps(int arr[], int n) {
@@ -22,18 +24,19 @@ public:
         int jumps = 1; // Number of jumps taken.
         
         for (int i = 1; i < n; i++) {
+            if (i > maxReach) {
+                return -1; // Cannot progress further.
+            }
+            
             if (i == n - 1) {
                 return jumps; // Reached the end, return the number of jumps.
             }
             
             maxReach = max(maxReach, i + arr[i]); // Update the maximum reach.
+            
             steps--; // Use one step.
             
             if (steps == 0) {
-                if (i >= maxReach) {
-                    return -1; // Cannot progress further.
-                }
-                
                 steps = maxReach - i; // Take a jump to the maximum reachable index.
                 jumps++; // Increment the number of jumps.
             }
@@ -42,6 +45,8 @@ public:
         return -1; // If the loop ends without reaching the end, return -1.
     }
 };
+
+
 
 
 
