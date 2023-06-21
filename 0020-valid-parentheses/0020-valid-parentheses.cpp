@@ -1,35 +1,39 @@
+#include <stack>
+#include <string>
+
 class Solution {
+private:
+    bool matches(char open, char close) {
+        return (open == '(' && close == ')') ||
+               (open == '{' && close == '}') ||
+               (open == '[' && close == ']');
+    }
+
 public:
     bool isValid(string s) {
-        stack <char> st;
+        stack<char> st;
+        int i = 0;
         int n = s.length();
-        int i=0;
-        while ( i< s.length()){
+        
+        while (i < n) {
             if (s[i] == '(' || s[i] == '{' || s[i] == '[') {
                 st.push(s[i]);
             } else {
                 if (st.empty()) {
-                    return false;  // No opening bracket to match with
+                    return false;
                 }
                 
-               char topElement = st.top();
+                char top_element = st.top();
                 st.pop();
                 
-                if (!matches(topElement, s[i])) {
-                    return false;  // Mismatched opening and closing brackets
+                if (!matches(top_element, s[i])) {
+                    return false;
                 }
             }
             
             i++;
         }
         
-        return st.empty();  // Check if there are any unclosed opening brackets left
-    }
-    
-private:
-    bool matches(char open, char close) {
-        return (open == '(' && close == ')') ||
-               (open == '{' && close == '}') ||
-               (open == '[' && close == ']');
+        return st.empty();
     }
 };
