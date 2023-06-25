@@ -1,36 +1,36 @@
+#include <algorithm> // for min function
+#include <vector>
+
 class MinStack {
 public:
+    std::vector<int> MinStacki;
+    int t = -1;
 
-vector<pair<int,int>> arr;
-    MinStack() {
+    MinStack() {}
 
-    }
-    
     void push(int val) {
-        if(arr.empty()){
-            arr.push_back({val,val});
-        }else{
-            arr.push_back({val,min(val,arr.back().second)});
+        t++;
+        MinStacki.push_back(val);
+    }
+
+    void pop() {
+        if (t == -1) {
+            return;
+        } else {
+            MinStacki.pop_back();
+            t--;
         }
     }
-    
-    void pop() {
-        arr.pop_back();
-    }
-    
+
     int top() {
-        return arr.back().first;
+        return MinStacki[t];
     }
-    
+
     int getMin() {
-        return arr.back().second;
+        int mini = INT_MAX;
+        for (int i = 0; i <= t; i++) {
+            mini = std::min(mini, MinStacki[i]);
+        }
+        return mini;
     }
 };
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack* obj = new MinStack();
- * obj->push(val);
- * obj->pop();
- * int param_3 = obj->top();
- * int param_4 = obj->getMin();
- */
