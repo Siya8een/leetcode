@@ -7,41 +7,26 @@ using namespace std;
 // } Driver Code Ends
 //User function template for C++
 
+
 class Solution
 {
     public:
     //Function to delete middle element of a stack.
-    void deleteMid(stack<int>& s, int sizeOfStack)
-{
-    int midIndex = (sizeOfStack - 1) / 2;
-
-    stack<int> tempStack;
-
-    // Pop and store elements from the original stack until the middle index
-    if (sizeOfStack %2 ==0){
-    for (int i = 0; i <= midIndex; i++) {
-        tempStack.push(s.top());
-        s.pop();
+    void deleteMidElement(stack<int> &st,const int &target,int index)
+    {
+        if(st.empty()) return ;
+        int ele = st.top();
+        st.pop();
+        deleteMidElement(st,target,index-1);
+        if(index!=target) st.push(ele);
     }
-}
-
-if (sizeOfStack %2 ==1){
-    for (int i = 0; i < midIndex; i++) {
-        tempStack.push(s.top());
-        s.pop();
+    void deleteMid(stack<int>&s, int sizeOfStack)
+    {
+        int mid = (sizeOfStack+1)/2;
+        deleteMidElement(s,mid-1,sizeOfStack-1); //-1s for considering 0 based indexing 
     }
-}
-    // Skip the middle element by popping it from the original stack
-    s.pop();
-
-    // Push back the elements from the temporary stack to the original stack
-    while (!tempStack.empty()) {
-        s.push(tempStack.top());
-        tempStack.pop();
-    }
-}
-
 };
+    
 
 //{ Driver Code Starts.
 int main() {
