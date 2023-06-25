@@ -12,18 +12,22 @@ class Solution
 {
     public:
     //Function to delete middle element of a stack.
-    void deleteMidElement(stack<int> &st,const int &target,int index)
-    {
-        if(st.empty()) return ;
-        int ele = st.top();
-        st.pop();
-        deleteMidElement(st,target,index-1);
-        if(index!=target) st.push(ele);
-    }
-    void deleteMid(stack<int>&s, int sizeOfStack)
-    {
-        int mid = (sizeOfStack+1)/2;
-        deleteMidElement(s,mid-1,sizeOfStack-1); //-1s for considering 0 based indexing 
+     void solve(stack<int>& s, int k) {
+        if (k == 1) {
+            s.pop();
+            return;
+        }
+        int temp = s.top();
+        s.pop();
+        solve(s, k - 1);
+        s.push(temp);
+}
+
+    void deleteMid(stack<int>& s, int sizeOfStack) {
+        if (s.empty())
+            return;
+        int k = (sizeOfStack / 2) + 1;
+        solve(s, k);
     }
 };
     
