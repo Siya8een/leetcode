@@ -90,35 +90,25 @@ struct Node
         left = right = NULL;
     }
 }; */
-
 class Solution {
-public:
-    int solve(Node* root, int& diameter) {
-        if (root == NULL) {
-            return 0;
-        }
-        
-        int h1 = solve(root->left, diameter);
-        int h2 = solve(root->right, diameter);
-        
-        diameter = max(diameter, h1 + h2);
-        
-        return 1 + max(h1, h2);
-    }
-
+  public:
+  int height(Node *node){
+        if(node==NULL)return 0;
+        return 1+max(height(node->right),height(node->left));
+  }
     // Function to return the diameter of a Binary Tree.
     int diameter(Node* root) {
-        if (root == NULL) {
-            return 0;
-        }
-        
-        int diameter = 0;
-        solve(root, diameter);
-        
-        return 1+diameter;
+        if(root==NULL)return 0;
+        // Your code here
+        // it is either max diatance between two leaf node of height of tree
+        int l=diameter(root->left);
+        int r=diameter(root->right);
+       // int ans max(1+l+r,ans);
+        int h=1+height(root->left)+height(root->right);
+        int ans=max(l,max(r,h));
+        return ans;
     }
 };
-
 
 //{ Driver Code Starts.
 
