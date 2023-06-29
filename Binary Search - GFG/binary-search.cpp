@@ -9,25 +9,25 @@ using namespace std;
 // User function template for C++
 
 class Solution {
-  public:
-    int binarysearch(int arr[], int n, int k) {
-        // code here
-        int left =0;
-        int right= n-1;
-        while ( left <= right ){
-            int mid = right +( left - right )/2;
-            if( arr[mid ]== k){
-                return mid;
-            }
-            if ( arr[mid]<k){
-                left = mid+1;
-            }
-            else{
-                right = mid-1;
-            }
+public:
+    int solve(int arr[], int left, int right, int k) {
+        if (left > right) {
+            return -1;
         }
-        return -1;
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == k) {
+            return mid;
+        } else if (arr[mid] < k) {
+            return solve(arr, mid + 1, right, k);
+        } else {
+            return solve(arr, left, mid - 1, k);
+        }
     }
+
+    int binarysearch(int arr[], int n, int k) {
+        return solve(arr, 0, n - 1, k);
+    }
+
 };
 
 //{ Driver Code Starts.
