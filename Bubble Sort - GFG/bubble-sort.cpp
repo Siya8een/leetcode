@@ -24,23 +24,20 @@ class Solution
     //Function to sort the array using bubble sort algorithm.
     void bubbleSort(int arr[], int n)
     {
-        // Your code here  
-        int i, j;
-    bool swapped;
-    for (i = 0; i < n - 1; i++) {
-        swapped = false;
-        for (j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                swap(arr[j], arr[j + 1]);
-                swapped = true;
-            }
-        }
-  
-        // If no two elements were swapped
-        // by inner loop, then break
-        if (swapped == false)
-            break;
+      if (n <= 1) {
+        return;
     }
+
+    // One pass of bubble sort to move the largest element to the end
+    for (int i = 0; i < n - 1; i++) {
+        if (arr[i] > arr[i + 1]) {
+            // Swap adjacent elements if they are in the wrong order
+            swap(arr[i], arr[i + 1]);
+        }
+    }
+
+    // Recursively call bubbleSortRecursive on the remaining (n-1) elements
+    bubbleSort(arr, n - 1);
     }
 };
 
