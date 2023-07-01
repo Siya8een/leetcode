@@ -1,21 +1,20 @@
-
 class Solution {
 public:
-
-
-    bool isSubsequence(const std::string& s, const std::string& t) {
-       //  bool isSubsequence(const std::string& s, const std::string& t) {
-        int sPointer = 0;
-        int tPointer = 0;
-
-        while (sPointer < s.length() && tPointer < t.length()) {
-            if (s[sPointer] == t[tPointer]) {
-                sPointer++;
+    bool isSubsequence(string s, string t) {
+        int i=0;
+        int j=0;
+        string ans ;
+        while ( i< s.length() && j< t.length()){
+            if ( s[i]== t[j]){
+                ans . push_back(s[i]);
+                i++;
+                j++;
+                
             }
-            tPointer++;
+            else {
+                j++;
+            }
         }
-
-        return sPointer == s.length();
+        return ans == s;
     }
-
 };
