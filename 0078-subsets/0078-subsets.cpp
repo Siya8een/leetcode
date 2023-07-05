@@ -1,31 +1,31 @@
 class Solution {
 public:
-    
-    vector<vector<int>> solve ( vector<int> nums,vector<vector<int>> & ans,vector<int> output, int index){
+      vector <vector <int>>ans={};
+     vector<vector<int>> solve(vector<int>& nums, int i, vector <int> level) {
+       
         
-        if ( index >= nums.size()){
-            ans.push_back(output);
-            return ans;
-        }
+         if( i>= nums.size()){
+              ans .push_back ( level );
+             return ans;
+         }
+         
         
-        // exclude call
-        solve ( nums, ans , output, index+1);
-        
-        
-        // include call
-         int element= nums[index];
-         output .push_back( element);
-         solve ( nums, ans , output, index+1);
-        return ans;
-    }
+         // exclude 
+          solve ( nums,i+1, level);
+         
+         // include 
+          level.push_back( nums[i]);
+          solve ( nums,i+1, level);
+         
+         
+         
+         return ans;
+     }
     
     vector<vector<int>> subsets(vector<int>& nums) {
-         
-         vector<vector<int>> ans;
-         vector <int> output;
-        int index= 0;
-        solve ( nums, ans , output, index);
-        
+        int i =0;
+         vector <int> level={};
+        solve ( nums,i, level);
         return ans;
     }
 };
