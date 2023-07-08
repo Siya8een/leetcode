@@ -1,13 +1,14 @@
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
         int n = nums.size();
+        int s = (n * (n + 1)) / 2;  // Sum of numbers from 1 to n
+
+        int ans = 0;
         for (int i = 0; i < n; i++) {
-            if (nums[i] != i) {
-                return i;
-            }
+            ans += nums[i];
         }
-        return n; // If no missing number found, return the last number in the sequence.
+
+        return s - ans;
     }
 };
