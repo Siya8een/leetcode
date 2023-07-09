@@ -1,31 +1,33 @@
 class Solution {
 public:
-      vector <vector <int>>ans={};
-     vector<vector<int>> solve(vector<int>& nums, int i, vector <int> level) {
-       
+     vector<vector<int>> ans;
+    
+    void solve(int index, vector<int>& nums, vector<int>& output) {
+     
+    if (index >= nums.size()) {
+            ans.push_back(output);
+            return;
+        }
         
-         if( i>= nums.size()){
-              ans .push_back ( level );
-             return ans;
-         }
-         
+        // Exclude the current element
+        solve(index + 1, nums, output);
         
-         // exclude 
-          solve ( nums,i+1, level);
-         
-         // include 
-          level.push_back( nums[i]);
-          solve ( nums,i+1, level);
-         
-         
-         
-         return ans;
-     }
+        // Include the current element
+        output.push_back(nums[index]);
+        solve(index + 1, nums, output);
+        
+        // Backtrack
+        output.pop_back();
+    }
     
     vector<vector<int>> subsets(vector<int>& nums) {
-        int i =0;
-         vector <int> level={};
-        solve ( nums,i, level);
+        vector<int> output;
+        int index = 0;
+        
+        solve(index, nums, output);
+        
         return ans;
+   // vector<vector<int>> subsets(vector<int>& nums) {
+        
     }
 };
