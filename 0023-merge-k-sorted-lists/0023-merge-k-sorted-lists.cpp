@@ -9,8 +9,10 @@
  * };
  */
 class Solution {
-    private:
-     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+public:
+    
+    // merging two lists
+   ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
          
         ListNode *dummy=new ListNode(-1);
         ListNode *head=dummy;
@@ -39,10 +41,8 @@ class Solution {
 
         return dummy->next;
     }
-
-public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        int n=lists.size();
+          int n=lists.size();
              if(n==0) return NULL;
              if(n==1) return lists[0];
             ListNode *node =mergeTwoLists(lists[0],lists[1]);
