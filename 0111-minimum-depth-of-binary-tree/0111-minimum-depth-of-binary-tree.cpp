@@ -11,18 +11,27 @@
  */
 class Solution {
 public:
+   int solve ( TreeNode* root ){
+        if ( root == NULL){
+            return 0;
+        }
+        int left = solve ( root-> left);
+        int right = solve ( root -> right );
+        if ( left ==0){
+            return right +1;
+        }
+       if ( right ==0){
+            return left +1;
+        }
+       else{
+           int height =  min( left,right );
+        return height +1;
+       }
+               
+    }
+    
     int minDepth(TreeNode* root) {
-        if (root == nullptr) {
-            return 0; // Return 0 if the node is null
-        }
         
-        if (root->left == nullptr && root->right == nullptr) {
-            return 1; // Return 1 if the current node is a leaf node
-        }
-        
-        int leftDepth = (root->left != nullptr) ? minDepth(root->left) : INT_MAX;
-        int rightDepth = (root->right != nullptr) ? minDepth(root->right) : INT_MAX;
-        
-        return 1 + min(leftDepth, rightDepth);
+          return solve ( root );
     }
 };
