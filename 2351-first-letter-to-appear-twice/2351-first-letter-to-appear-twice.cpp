@@ -1,17 +1,17 @@
 class Solution {
 public:
     char repeatedCharacter(string s) {
-        unordered_map<char, int> mpp;
-        char ans = '\0'; // Initialize ans with a null character
+        vector<int> hash(256, 0);  // Initialize the hash table with 256 elements
 
-        for (int i = 0; i < s.length(); i++) {
-            mpp[s[i]]++;
-            if (mpp[s[i]] == 2) {
-                ans = s[i];
-                break;  // Exit the loop once a repeated character is found
+        for (int i = 0; i < s.size(); i++) {
+            hash[s[i]]++;
+            if (hash[s[i]] == 2) {
+                return s[i];
             }
         }
 
-        return ans;
+       
+
+        return '\0';  // No repeated character found
     }
 };
