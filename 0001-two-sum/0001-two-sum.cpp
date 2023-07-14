@@ -13,5 +13,3 @@ public:
         return {-1, -1};
     }
 };
-
-// we may also use two pointer approach 
