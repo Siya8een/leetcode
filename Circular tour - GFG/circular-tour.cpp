@@ -39,7 +39,12 @@ public:
 
         // If the total petrol available at all pumps is greater than or equal to the total distance,
         // then a valid starting point exists. Return the starting point index.
-        return (totalBalance >= 0) ? start : -1;
+        if (totalBalance >= 0) {
+    return start;
+}
+else {
+    return -1;
+    }
     }
 };
 
