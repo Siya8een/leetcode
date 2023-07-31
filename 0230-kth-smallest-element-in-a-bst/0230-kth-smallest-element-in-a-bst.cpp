@@ -9,22 +9,25 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-//class Solution {
+#include <vector>
+
 class Solution {
 public:
-    int kthSmallest(TreeNode* root, int& k) {
-        
-        if(root==NULL)
-        return -1;
-    
-    int leftans=kthSmallest(root->left,k);
-    if(leftans!=-1)
-     return leftans;
+    std::vector<int> ans;
 
-     k--;
-    if(k==0){
-    return root->val;}
-    int rightans=kthSmallest(root->right,k);
-    return rightans;
+    void inorderTraversal(TreeNode* root) {
+        if (root == nullptr) {
+            return;
+        }
+
+        inorderTraversal(root->left);
+        ans.push_back(root->val);
+        inorderTraversal(root->right);
+    }
+
+    int kthSmallest(TreeNode* root, int k) {
+        ans.clear();
+        inorderTraversal(root);
+        return ans[k - 1];
     }
 };
