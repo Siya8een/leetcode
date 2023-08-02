@@ -12,28 +12,20 @@
 class Solution {
 public:
     void flatten(TreeNode* root) {
-        if(root==NULL)
-            return;
-        // Store the original right child in a temporary variable
-        TreeNode* temp=root->right;
+        if ( root == NULL){
+             return;
+        }
+         TreeNode* temp=root->right;
         
-        // Make the left subtree the new right subtree
+        // left = new right subtree
         root->right=root->left;
         root->left=NULL;
-
-        // Find the rightmost node of the newly attached left subtree
-        TreeNode* rightMost=root;
-        while(rightMost->right)
-        {
-            rightMost=rightMost->right;
+        TreeNode* rightmost = root ;
+        while ( rightmost -> right != NULL){
+            rightmost = rightmost -> right;
         }
-
-        // Attach the original right subtree to the rightmost node of the new right subtree
-        rightMost->right=temp;
-
-        // Update the root to the current right child and continue the recursive call
-        root=root->right;
+        rightmost->right=temp;
+root=root->right;
         flatten(root);
-
     }
 };
