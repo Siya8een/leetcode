@@ -1,26 +1,24 @@
 class Solution {
 public:
-    int solve(TreeNode* root, int& diameter) {
-        if (root == nullptr) {
+    int dia(TreeNode* root, int& max_diameter) {
+        if (root == NULL) {
             return 0;
         }
+        int left_height = dia(root->left, max_diameter);
+        int right_height = dia(root->right, max_diameter);
+      
+        int diameter_through_root = left_height + right_height;
+        max_diameter = max(max_diameter, diameter_through_root);
         
-        int leftHeight = solve(root->left, diameter);
-        int rightHeight = solve(root->right, diameter);
-        
-        diameter = max(diameter, leftHeight + rightHeight);
-        
-        return 1 + max(leftHeight, rightHeight);
+        return 1 + max(left_height, right_height);
     }
-    
+
     int diameterOfBinaryTree(TreeNode* root) {
-        if (root == nullptr) {
+        if (root == NULL) {
             return 0;
         }
-        
-        int diameter = 0;
-        solve(root, diameter);
-        
-        return diameter;
+        int max_diameter = 0;
+        dia(root, max_diameter);
+        return max_diameter;
     }
 };
