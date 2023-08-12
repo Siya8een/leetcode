@@ -1,27 +1,16 @@
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        if (nums.empty()) {
-            return 0; // Empty array has a product of 0
+     int prod1=nums[0],prod2=nums[0],result=nums[0];
+        int n=nums.size();
+        for(int i=1;i<n;i++)
+        {
+            int temp= max({nums[i],prod1*nums[i],prod2*nums[i]});
+            prod2=min({nums[i],prod1*nums[i],prod2*nums[i]});
+            prod1=temp;
+
+            result= max(result,prod1);
         }
-        
-        int maxProduct = nums[0];
-        int minProduct = nums[0];
-        int result = nums[0];
-        
-        for (int i = 1; i < nums.size(); i++) {
-            int num = nums[i];
-            
-            if (num < 0) {
-                swap(maxProduct, minProduct); // Swap max and min products for negative numbers
-            }
-            
-            maxProduct = max(num, maxProduct * num);
-            minProduct = min(num, minProduct * num);
-            
-            result = max(result, maxProduct);
-        }
-        
         return result;
     }
 };
