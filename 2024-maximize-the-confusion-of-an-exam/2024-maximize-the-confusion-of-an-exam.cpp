@@ -1,28 +1,30 @@
 class Solution {
 public:
-    
-    int count(string s, int k, char ch){
-        int n=s.length();
-        
-        int maxlen=0, bad=0; // count of opposite parity character
-        
-        int i=0, j=0;
-        while(j<n){
-            if(s[j]!=ch) bad++; // check if we are acquiring a bad character at rear end
-            
-            while(i<=j && bad>k){
-                char cur=s[i];
-                if(cur!=ch) bad--; // releasing bad characters acquired from front end
-                i++;
-            }
-            
-            maxlen=max(maxlen,j-i+1);
-            j++;
-        }
-        return maxlen;
-    }
-    
     int maxConsecutiveAnswers(string s, int k) {
-        return max(count(s,k,'T'),count(s,k,'F')); // max number of consecutive 'T's or 'F's
+        int n = s.size();
+        int start = 0;
+        int end = 0;
+        int t = 0, f = 0; // Counters for 'T' and 'F' characters
+        int ans = 0; // Maximum consecutive answers
+
+        while (end < n) {
+            // Update counters based on the current character
+            t += (s[end] == 'T');
+            f += (s[end] == 'F');
+
+            while (t > k && f > k) {
+                // If both counters exceed 'k', move the start pointer and adjust counters
+                if (s[start] == 'T')
+                    t--;
+                else
+                    f--;
+                start++;
+            }
+
+            ans = max(ans, end - start + 1); // Update the maximum consecutive answers
+            end++;
+        }
+
+        return ans;
     }
 };
