@@ -12,8 +12,9 @@ public:
                 maxLength = max(maxLength, right - left + 1);
             } else {
                 while (charSet.count(s[right])) {
+                   int a= charSet.count(s[left]);
                     charSet.erase(s[left]);
-                    left++;
+                    left= left+ a;
                 }
                 charSet.insert(s[right]);
             }
