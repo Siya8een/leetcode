@@ -1,24 +1,26 @@
 class Solution {
 public:
+    double solve(double x, long long n) { // Use long long for 'n'
+        if (n == 0) {
+            return 1.0; // Any number raised to the power of 0 is 1
+        }
+        
+        double half = solve(x, n / 2);
+        if (n % 2 == 0) {
+            return half * half;
+        } else {
+            return x * half * half;
+        }
+    }
+    
     double myPow(double x, int n) {
-        double ans = 1;
-        long long m = n;
-        if(n < 0){
-            m = (-1) * m;
+        long long exp = n; // Convert to long long
+        
+        if (exp < 0) {
+            x = 1.0 / x;
+            exp = -exp;
         }
-        while(m > 0){
-            if(m % 2 == 1){
-                ans = ans * x;
-                m = m -1;
-            }
-            else{
-                x = x*x;
-                m = m/2;
-            }
-        }
-        if(n < 0){
-            ans = 1/ans;
-        }
-        return ans;
+        
+        return solve(x, exp);
     }
 };
