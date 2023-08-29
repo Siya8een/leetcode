@@ -1,20 +1,23 @@
 class Solution {
 public:
-    
+    void recursiveReverse(ListNode* &head, ListNode* current, ListNode* prev) {
+        if (current == nullptr ) {
+            head = prev;
+            return;
+        }
+        
+        ListNode* forward = current->next;
+        recursiveReverse(head, forward, current);
+        current->next = prev;
+    }
     
     ListNode* reverseList(ListNode* head) {
-        // Base case: If the list is empty or has only one node, no need to reverse
-        if (head == nullptr || head->next == nullptr) {
+        if (head == nullptr || head->next == nullptr)
             return head;
-        }
-
-        ListNode* restReversed = reverseList(head->next); // Reverse the rest of the list
-
-        // Adjust the pointers to reverse the current node
-        head->next->next = head;
-        head->next = nullptr;
-
-        return restReversed; // Return the new head of the reversed list
+        
+        ListNode* current = head;
+        ListNode* prev = nullptr;
+        recursiveReverse(head, current, prev);
+        return head;
     }
 };
-
