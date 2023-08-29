@@ -1,24 +1,20 @@
 class Solution {
 public:
+    
+    
     ListNode* reverseList(ListNode* head) {
+        // Base case: If the list is empty or has only one node, no need to reverse
         if (head == nullptr || head->next == nullptr) {
-            return head; // If the list is empty or has only one node, no need to reverse
+            return head;
         }
 
-        ListNode* prev = nullptr;
-        ListNode* curr = head;
-        ListNode* nextNode = nullptr;
+        ListNode* restReversed = reverseList(head->next); // Reverse the rest of the list
 
-        while (curr != nullptr) {
-            nextNode = curr->next; // Store the next node
-            curr->next = prev;     // Reverse the link
+        // Adjust the pointers to reverse the current node
+        head->next->next = head;
+        head->next = nullptr;
 
-            // Move pointers to the next iteration
-            prev = curr;
-            curr = nextNode;
-        }
-
-        head = prev; // Update the new head of the reversed list
-        return head;
+        return restReversed; // Return the new head of the reversed list
     }
 };
+
