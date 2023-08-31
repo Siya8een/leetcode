@@ -1,6 +1,6 @@
 class Solution {
-    private:
-    void solve(string d,int index, string output,string mapping[], vector<string>& ans){
+public:
+      void solve(string d,int index, string output,string mapping[], vector<string>& ans){
         if ( index>= d.length()){
             ans.push_back(output);
             return;
