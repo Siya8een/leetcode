@@ -1,43 +1,29 @@
 class Solution {
 public:
-
-    void Sum(vector<int>& candidates, int target, vector<vector<int> >& res, vector<int>& r, int i)
-    {
-        
-        if(target == 0)
-        {
-            // if we get exact answer
-            res.push_back(r);
+    void solve(vector<vector<int>>& ans, int index, vector<int>& combo, vector<int>& candidates, int target) {
+        if (target == 0) {
+            ans.push_back(combo);
             return;
         }
-        
-        while(i <  candidates.size() && target - candidates[i] >= 0)
-        {
-            // Till every element in the array starting
-            // from i which can contribute to the target
-            r.push_back(candidates[i]);// add them to vector
-            
-            // recur for next numbers
-            Sum(candidates,target - candidates[i],res,r,i);
-            i++;
-            
-            // Remove number from vector (backtracking)
-            r.pop_back();
+
+        if (index == candidates.size() || target < 0) {
+            return;
         }
-}
-    
-     
+
+        // Include the current candidate and make a recursive call
+        combo.push_back(candidates[index]);
+        solve(ans, index, combo, candidates, target - candidates[index]);
+
+        // Exclude the current candidate and make a recursive call
+        combo.pop_back();
+        solve(ans, index + 1, combo, candidates, target);
+    }
+
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        sort(candidates.begin(),candidates.end()); // sort candidates array
-        
-        // remove duplicates
-        candidates.erase(unique(candidates.begin(),candidates.end()),candidates.end());
-        
-        vector<int> r;
-        vector<vector<int> > res;
-        
-        Sum(candidates,target,res,r,0);
-        
-        return res;
+        vector<vector<int>> ans;
+        vector<int> combo;
+        int index = 0;
+        solve(ans, index, combo, candidates, target);
+        return ans;
     }
 };
