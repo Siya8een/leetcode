@@ -1,42 +1,40 @@
 class Solution {
 public:
-    int sum(vector<int>& weights) {
-        int ans = 0;
-        for (int i = 0; i < weights.size(); i++) {
-            ans = ans + weights[i];
-        }
-        return ans;
-    }
-
-    bool canShipWithinDays(vector<int>& weights, int capacity, int days) {
-        int currentDay = 1;
-        int currentWeight = 0;
+     int sum( vector <int>& weights){
+         int ans =0;
+         for ( int i =0 ; i < weights.size();i++){
+             ans = ans + weights[i];
+         }
+         return ans ;
+     }
+    
+   int canship(int mid ,vector<int>& weights, int days){
+        int currentCapacity = 0;
+        int requiredDays = 1;
 
         for (int weight : weights) {
-            if (currentWeight + weight > capacity) {
-                currentDay++;
-                currentWeight = 0;
+            if (currentCapacity + weight > mid) {
+                requiredDays++;
+                currentCapacity = 0;
             }
-            currentWeight += weight;
+            currentCapacity += weight;
         }
 
-        return currentDay <= days;
-    }
-
+        return requiredDays <= days;
+   }
+    
     int shipWithinDays(vector<int>& weights, int days) {
-        int start = *max_element(weights.begin(), weights.end()); // Minimum capacity starts at the maximum individual weight
-        int end = sum(weights);
-
-        while (start < end) {
-            int mid = start + (end - start) / 2;
-
-            if (canShipWithinDays(weights, mid, days)) {
-                end = mid;
-            } else {
-                start = mid + 1;
+        int start = *max_element(weights.begin(), weights.end()); 
+        int end = sum( weights);
+        while ( start < end ){
+             int mid = start + (end - start) / 2;
+            if ( canship(mid , weights, days )){
+                 end = mid;
+            }
+            else {
+                start = mid +1;
             }
         }
-
         return start;
     }
 };
