@@ -1,25 +1,42 @@
 class Solution {
 public:
-    int mod = pow(10,9) + 7;
+   
     int numFactoredBinaryTrees(vector<int>& arr) {
-        sort(arr.begin(), arr.end());
-        unordered_map <int, long> rootWithCount;
-        rootWithCount[arr[0]] = 1;
-        for(int i = 1; i < arr.size(); i++){
-            long count = 1;
-            for(auto j : rootWithCount){
-                int rootEle = j.first;
-                if(arr[i] % rootEle == 0 && rootWithCount.find(arr[i] / rootEle) != rootWithCount.end()){
-                    count += rootWithCount[rootEle] * rootWithCount[arr[i] / rootEle];
-                    
+          
+        map<int,long long int>m;
+        sort(arr.begin(),arr.end());
+        
+        for(int x=0;x<arr.size();x++)
+        {
+            m.insert({arr[x],1});
+        }
+        
+        for(int i=1;i<arr.size();i++)
+        {  auto it3 = m.find(arr[i]);
+            long long int count =0;
+            for(int j=0;j<i;j++)
+            { 
+                if(arr[i]%arr[j]==0)
+                {   
+                    auto it =m.find(arr[i]/arr[j]); 
+                    auto it2 = m.find(arr[j]); 
+                    if(it!=m.end())
+                    {
+                        count+=(it->second)*(it2->second);
+                    }
                 }
+                
             }
-            rootWithCount[arr[i]] = count;
+            
+           it3->second+=count; 
+            
         }
-        int noOfTrees = 0;
-        for(auto i : rootWithCount){
-            noOfTrees = (noOfTrees + i.second) % mod;
+        long long int sum =0;
+        for(auto it4=m.begin();it4!=m.end();it4++)
+        {
+            sum+= it4->second;
         }
-        return noOfTrees;
+       
+     return sum%(1000000007);
     }
 };
