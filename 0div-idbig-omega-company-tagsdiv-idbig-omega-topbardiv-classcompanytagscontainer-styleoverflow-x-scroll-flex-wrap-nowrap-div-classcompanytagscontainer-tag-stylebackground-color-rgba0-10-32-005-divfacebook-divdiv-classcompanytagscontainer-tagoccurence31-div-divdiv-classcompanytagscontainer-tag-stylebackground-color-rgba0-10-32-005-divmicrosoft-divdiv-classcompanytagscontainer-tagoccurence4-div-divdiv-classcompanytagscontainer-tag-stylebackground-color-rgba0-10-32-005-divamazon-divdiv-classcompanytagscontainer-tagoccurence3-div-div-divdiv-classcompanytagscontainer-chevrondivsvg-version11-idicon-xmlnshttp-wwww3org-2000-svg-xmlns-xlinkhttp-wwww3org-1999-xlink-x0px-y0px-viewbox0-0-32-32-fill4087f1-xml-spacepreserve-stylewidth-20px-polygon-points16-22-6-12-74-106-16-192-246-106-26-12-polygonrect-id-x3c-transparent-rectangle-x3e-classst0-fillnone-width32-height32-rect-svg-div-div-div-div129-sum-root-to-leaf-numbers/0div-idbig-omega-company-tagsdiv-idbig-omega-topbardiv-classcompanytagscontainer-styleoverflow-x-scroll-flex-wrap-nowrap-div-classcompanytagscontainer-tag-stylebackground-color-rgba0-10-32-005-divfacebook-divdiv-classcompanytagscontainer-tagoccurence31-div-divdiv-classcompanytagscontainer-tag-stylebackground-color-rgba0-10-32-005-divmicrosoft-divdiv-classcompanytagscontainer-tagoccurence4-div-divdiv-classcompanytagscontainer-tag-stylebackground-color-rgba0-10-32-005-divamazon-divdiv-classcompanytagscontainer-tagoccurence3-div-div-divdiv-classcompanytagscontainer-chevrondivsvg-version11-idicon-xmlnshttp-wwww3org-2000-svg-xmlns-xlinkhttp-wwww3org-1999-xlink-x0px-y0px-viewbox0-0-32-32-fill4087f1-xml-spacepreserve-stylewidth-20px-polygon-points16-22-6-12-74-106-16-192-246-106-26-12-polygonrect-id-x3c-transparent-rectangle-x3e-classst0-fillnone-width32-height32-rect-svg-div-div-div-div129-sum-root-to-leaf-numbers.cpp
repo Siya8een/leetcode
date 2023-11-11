@@ -1,38 +1,25 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
-     void numbervector(TreeNode* root,  int number, int& sum) {
+     void numbervector(TreeNode* root, int number, vector<int>& ans) {
         if (root == nullptr) {
             return;
         }
         number = number * 10 + root->val;
 
         if (root->left == nullptr && root->right == nullptr) {
-            sum = sum + number;
+            ans.push_back(number);
         }
 
-        numbervector(root->left, number,sum);
-        numbervector(root->right,  number,sum);
+        numbervector(root->left, number, ans);
+        numbervector(root->right, number, ans);
     }
 
     int sumNumbers(TreeNode* root) {
-        
         int number = 0;
-        int sum =0;
-        // get all the numbers in ans ;
-        numbervector(root,  number, sum);
-        
+        vector<int> ans;
+        numbervector(root, number, ans);
 
+        int sum = accumulate(ans.begin(), ans.end(), 0);
         return sum;
     }
 };
