@@ -11,39 +11,28 @@
  */
 class Solution {
 public:
-     void numbervector(TreeNode* root, vector<int>& paths, int number) {
+     void numbervector(TreeNode* root,  int number, int& sum) {
         if (root == nullptr) {
             return;
         }
-
-       
         number = number * 10 + root->val;
 
-        
         if (root->left == nullptr && root->right == nullptr) {
-            paths.push_back(number);
+            sum = sum + number;
         }
 
-        // Recursively traverse the left and right subtrees
-        numbervector(root->left, paths, number);
-        numbervector(root->right, paths, number);
+        numbervector(root->left, number,sum);
+        numbervector(root->right,  number,sum);
     }
 
     int sumNumbers(TreeNode* root) {
-        vector<int> paths;
-        int number = 0;
         
+        int number = 0;
+        int sum =0;
         // get all the numbers in ans ;
-        numbervector(root, paths, number);
+        numbervector(root,  number, sum);
+        
 
-        // Now you can do something with the paths vector, e.g., calculate the sum
-        int totalSum = 0;
-        for (int num : paths) {
-            totalSum += num;
-        }
-
-        return totalSum;
+        return sum;
     }
-
-
 };
