@@ -1,42 +1,54 @@
+#include <vector>
+#include <queue>
+#include <climits>
+using namespace std;
+
 class Solution {
 public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
         int n = grid.size();
 
-        // To store if visited or not
-        vector<vector<bool>> visited(n, vector<bool>(n));
+        // Check if the start and destination cells are blocked
+        if (grid[0][0] != 0 || grid[n - 1][n - 1] != 0) {
+            return -1;
+        }
 
-        // Using BFS
-        queue<pair<pair<int, int>, int>> q;
-        q.push(make_pair(make_pair(0, 0), 1));
+        pair<int, int> src = {0, 0};
+        pair<int, int> destination = {n - 1, n - 1};
+        vector<vector<int>> dist(n, vector<int>(n, INT_MAX));
+        queue<pair<int, pair<int, int>>> q;
 
-        while(!q.empty()) {
-            int i = q.front().first.first;
-            int j = q.front().first.second;
-            int value = q.front().second;
+        dist[src.first][src.second] = 1; // Starting with the first cell
+        q.push({1, {src.first, src.second}}); // {dist, {row, col}}
+
+        // Possible moves in 8 directions
+        int dr[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int dc[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+        while (!q.empty()) {
+            auto node = q.front();
             q.pop();
 
-            // If current is out of bounds or is 1 or visited, skip it
-            if(min(i, j)<0 || max(i, j)>=n || grid[i][j] || visited[i][j]) continue;
+            int distnode = node.first;
+            int r = node.second.first;
+            int c = node.second.second;
 
-            // If the target node is reached, return current value. As, we use BFS, we will get only shortest path
-            if(i == n-1 && j == n-1) return value;
+            if (r == destination.first && c == destination.second) {
+                return distnode;
+            }
 
-            // Mark visited and add cells in all directions
-            visited[i][j] = true;
-            q.push(make_pair(make_pair(i-1, j-1), value+1));
-            q.push(make_pair(make_pair(i-1, j), value+1));
-            q.push(make_pair(make_pair(i-1, j+1), value+1));
+            for (int i = 0; i < 8; i++) {
+                int newr = r + dr[i];
+                int newc = c + dc[i];
 
-            q.push(make_pair(make_pair(i, j-1), value+1));
-            q.push(make_pair(make_pair(i, j+1), value+1));
-
-            q.push(make_pair(make_pair(i+1, j-1), value+1));
-            q.push(make_pair(make_pair(i+1, j), value+1));
-            q.push(make_pair(make_pair(i+1, j+1), value+1));
+                if (newr >= 0 && newc >= 0 && newr < n && newc < n &&
+                    grid[newr][newc] == 0 && distnode + 1 < dist[newr][newc]) {
+                    dist[newr][newc] = distnode + 1;
+                    q.push({dist[newr][newc], {newr, newc}});
+                }
+            }
         }
+
         return -1;
     }
-private:
-
 };
