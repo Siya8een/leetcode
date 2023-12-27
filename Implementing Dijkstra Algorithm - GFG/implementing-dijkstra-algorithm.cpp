@@ -11,25 +11,31 @@ class Solution
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
         // Code here
-         vector <int> dist (V , 1e9);
-         dist[S]=0;
-         priority_queue< pair < int , int >, vector<pair <int, int>>, greater <pair <int, int>>> pq;
-         pq.push({ 0 , S});
-         
-         while(!pq.empty()){
-             int distance = pq.top().first;
-             int node= pq.top().second;
-             pq.pop();
-             for ( auto it : adj[node]){
-                 int edgeweight =it[1];
-                 int adjNode = it[0];
-                 if ( distance + edgeweight < dist[adjNode]){
-                   dist[adjNode] = distance + edgeweight ;
-                    pq.push({ dist[adjNode], adjNode});
-                 }
+        set < pair < int , int>> st;
+        st.insert ( { 0, S});
+        vector < int > dis ( V , 1e9);
+        dis[S]=0;
+        while ( !st.empty()){
+            auto it = *(st.begin());
+             int node = it.second;
+             int dist = it.first;
+            
+             st.erase (it);
+             for ( auto i: adj[node]){
+                 int adjNode = i[0];
+                 int edgew = i[1];
+                if ( edgew + dist <  dis[adjNode]){
+                    if (dis[adjNode]!= 1e9){
+                        st. erase ({ dis[adjNode] , adjNode});
+                    }
+                    dis[adjNode]=edgew + dist;
+                    st.insert({dis[adjNode],adjNode });
+                }
+                 
              }
-         }
-         return dist ;
+             
+        }
+        return dis;
     }
 };
 
