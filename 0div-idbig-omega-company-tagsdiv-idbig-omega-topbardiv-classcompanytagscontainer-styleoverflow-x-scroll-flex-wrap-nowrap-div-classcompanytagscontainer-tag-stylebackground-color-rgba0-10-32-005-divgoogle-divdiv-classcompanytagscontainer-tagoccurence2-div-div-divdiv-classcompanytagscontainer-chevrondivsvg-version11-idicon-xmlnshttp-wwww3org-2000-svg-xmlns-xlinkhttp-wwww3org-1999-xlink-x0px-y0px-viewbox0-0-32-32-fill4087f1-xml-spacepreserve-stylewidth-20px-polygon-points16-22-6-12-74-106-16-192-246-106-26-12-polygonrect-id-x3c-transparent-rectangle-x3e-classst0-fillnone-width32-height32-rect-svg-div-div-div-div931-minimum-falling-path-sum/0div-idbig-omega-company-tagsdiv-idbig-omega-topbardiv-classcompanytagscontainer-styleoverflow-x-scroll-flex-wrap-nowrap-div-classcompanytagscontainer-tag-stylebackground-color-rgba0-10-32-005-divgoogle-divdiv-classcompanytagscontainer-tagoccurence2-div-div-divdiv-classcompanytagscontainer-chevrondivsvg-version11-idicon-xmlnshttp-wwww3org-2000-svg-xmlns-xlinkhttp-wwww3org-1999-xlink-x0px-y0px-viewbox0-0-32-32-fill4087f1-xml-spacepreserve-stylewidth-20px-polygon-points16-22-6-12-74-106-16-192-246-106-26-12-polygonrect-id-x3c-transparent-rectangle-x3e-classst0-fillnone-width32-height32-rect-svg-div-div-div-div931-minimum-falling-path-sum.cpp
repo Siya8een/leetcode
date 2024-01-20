@@ -1,33 +1,41 @@
+#include <vector>
+#include <climits>  // Include this for INT_MAX
+
 class Solution {
 public:
-    int minFallingPathSum(vector<vector<int>>& matrix) {
+    int minFallingPathSum(std::vector<std::vector<int>>& matrix) {
         int n = matrix.size();
-        
-        // Create a copy of the input matrix to store intermediate results
-        vector<vector<int>> dp(n, vector<int>(n, 0));
-        
-        // Initialize the first row of dp matrix with the same values as the first row of the input matrix
+        std::vector<std::vector<int>> dp(n, std::vector<int>(n, -1));
+
+        // Initialize the bottom row of dp with the corresponding values from the matrix
         for (int i = 0; i < n; i++) {
-            dp[0][i] = matrix[0][i];
+            dp[n - 1][i] = matrix[n - 1][i];
         }
-        
-        // Iterate through the matrix row by row, calculating the minimum falling path sum
-        for (int i = 1; i < n; i++) {
+
+        for (int i = n - 2; i >= 0; i--) {
+            int col[] = {-1, 0, 1};
             for (int j = 0; j < n; j++) {
-                dp[i][j] = matrix[i][j] + min({
-                    dp[i - 1][j], // directly below
-                    (j > 0) ? dp[i - 1][j - 1] : INT_MAX, // diagonally left
-                    (j < n - 1) ? dp[i - 1][j + 1] : INT_MAX // diagonally right
-                });
+                int minVal = INT_MAX;  // Initialize to a large value
+
+                for (int it = 0; it < 3; it++) {
+                    int colr = col[it] + j;
+
+                    if (colr >= 0 && colr < n) {
+                        int value = matrix[i][j] + dp[i + 1][colr];
+                        minVal = std::min(minVal, value);
+                    }
+                }
+
+                dp[i][j] = minVal;
             }
         }
-        
-        // Find the minimum sum in the last row of dp matrix, which represents the minimum falling path sums
+
+        // Find the minimum value in the first row (dp array)
         int minSum = INT_MAX;
         for (int i = 0; i < n; i++) {
-            minSum = min(minSum, dp[n - 1][i]);
+            minSum = std::min(minSum, dp[0][i]);
         }
-        
+
         return minSum;
     }
 };
