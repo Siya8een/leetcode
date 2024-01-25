@@ -1,31 +1,34 @@
 class Solution {
 public:
-    int solve(int index, bool hasStock, vector<int>& prices, vector<vector<int>>& dp) {
+    int solve(int canbuy, vector<int>& prices, int index,vector<vector<int>>& dp) {
         if (index >= prices.size()) {
             return 0;
         }
 
-        if (dp[index][hasStock] != -1) {
-            return dp[index][hasStock];
+        if (dp[canbuy][index] != -1) {
+            return dp[canbuy][index];
         }
 
-        if (hasStock) {
-            // If we have a stock, we can either sell it or do nothing
-            int sell = prices[index] + solve(index + 1, false, prices, dp);
-            int noAction = solve(index + 1, true, prices, dp);
-            dp[index][hasStock] = max(sell, noAction);
+        int a = 0, b = 0;
+  int profit = 0;
+        if (canbuy == 1) {
+            // Buy or skip buying
+            profit = max(-prices[index] + solve(0, prices, index + 1,  dp), solve(1, prices, index + 1, dp));
         } else {
-            // If we don't have a stock, we can either buy one or do nothing
-            int buy = -prices[index] + solve(index + 1, true, prices, dp);
-            int noAction = solve(index + 1, false, prices, dp);
-            dp[index][hasStock] = max(buy, noAction);
+            // Sell or skip selling
+            profit = max(prices[index] + solve(1, prices, index + 1,  dp), solve(0, prices, index + 1, dp));
         }
 
-        return dp[index][hasStock];
+      
+        dp[canbuy][index] = profit;
+
+        return profit;
     }
 
     int maxProfit(vector<int>& prices) {
-        vector<vector<int>> dp(prices.size(), vector<int>(2, -1));
-        return solve(0, false, prices, dp);
+        int canbuy = 1;
+      
+        vector<vector<int>> dp(canbuy + 1, vector<int>(prices.size(), -1));
+        return solve(canbuy, prices, 0,  dp);
     }
 };
