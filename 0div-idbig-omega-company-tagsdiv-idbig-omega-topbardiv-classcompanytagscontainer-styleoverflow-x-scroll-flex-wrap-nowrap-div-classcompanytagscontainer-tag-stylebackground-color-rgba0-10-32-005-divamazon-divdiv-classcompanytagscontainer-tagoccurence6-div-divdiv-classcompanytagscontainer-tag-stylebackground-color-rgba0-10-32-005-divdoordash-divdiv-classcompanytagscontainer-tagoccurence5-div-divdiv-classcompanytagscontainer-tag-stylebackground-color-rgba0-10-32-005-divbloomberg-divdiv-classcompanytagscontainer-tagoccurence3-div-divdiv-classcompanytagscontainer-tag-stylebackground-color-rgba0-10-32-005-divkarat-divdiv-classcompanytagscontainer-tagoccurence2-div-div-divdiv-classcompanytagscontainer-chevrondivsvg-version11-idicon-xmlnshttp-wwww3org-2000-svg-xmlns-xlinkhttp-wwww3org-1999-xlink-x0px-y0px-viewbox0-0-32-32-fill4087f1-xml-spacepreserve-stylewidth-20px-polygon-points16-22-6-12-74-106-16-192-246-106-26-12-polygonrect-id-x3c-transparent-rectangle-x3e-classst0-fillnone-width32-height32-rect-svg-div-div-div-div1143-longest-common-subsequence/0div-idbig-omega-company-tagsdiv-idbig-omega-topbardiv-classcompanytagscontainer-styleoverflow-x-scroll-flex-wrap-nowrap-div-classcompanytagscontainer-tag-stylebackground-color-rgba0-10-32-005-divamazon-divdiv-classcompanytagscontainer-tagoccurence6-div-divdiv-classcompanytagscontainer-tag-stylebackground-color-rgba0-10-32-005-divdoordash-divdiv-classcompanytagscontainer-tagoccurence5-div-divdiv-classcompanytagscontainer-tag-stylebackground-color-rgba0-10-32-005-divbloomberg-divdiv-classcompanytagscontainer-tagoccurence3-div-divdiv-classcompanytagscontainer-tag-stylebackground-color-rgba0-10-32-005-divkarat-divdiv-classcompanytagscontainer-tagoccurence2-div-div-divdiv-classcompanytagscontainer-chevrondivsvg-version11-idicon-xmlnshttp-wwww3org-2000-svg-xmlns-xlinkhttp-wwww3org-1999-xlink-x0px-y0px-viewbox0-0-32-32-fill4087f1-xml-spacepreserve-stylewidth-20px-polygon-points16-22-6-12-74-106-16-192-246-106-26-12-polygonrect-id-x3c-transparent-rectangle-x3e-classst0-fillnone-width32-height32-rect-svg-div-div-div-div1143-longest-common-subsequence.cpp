@@ -5,6 +5,9 @@ using namespace std;
 class Solution {
 public:
     
+    // recurrence  TC = 2^n * 2^m ;
+   //               SC = N X M ;
+    
     // MEMOISATION  TC = N X M ;
    //               SC = N X M ;
     
