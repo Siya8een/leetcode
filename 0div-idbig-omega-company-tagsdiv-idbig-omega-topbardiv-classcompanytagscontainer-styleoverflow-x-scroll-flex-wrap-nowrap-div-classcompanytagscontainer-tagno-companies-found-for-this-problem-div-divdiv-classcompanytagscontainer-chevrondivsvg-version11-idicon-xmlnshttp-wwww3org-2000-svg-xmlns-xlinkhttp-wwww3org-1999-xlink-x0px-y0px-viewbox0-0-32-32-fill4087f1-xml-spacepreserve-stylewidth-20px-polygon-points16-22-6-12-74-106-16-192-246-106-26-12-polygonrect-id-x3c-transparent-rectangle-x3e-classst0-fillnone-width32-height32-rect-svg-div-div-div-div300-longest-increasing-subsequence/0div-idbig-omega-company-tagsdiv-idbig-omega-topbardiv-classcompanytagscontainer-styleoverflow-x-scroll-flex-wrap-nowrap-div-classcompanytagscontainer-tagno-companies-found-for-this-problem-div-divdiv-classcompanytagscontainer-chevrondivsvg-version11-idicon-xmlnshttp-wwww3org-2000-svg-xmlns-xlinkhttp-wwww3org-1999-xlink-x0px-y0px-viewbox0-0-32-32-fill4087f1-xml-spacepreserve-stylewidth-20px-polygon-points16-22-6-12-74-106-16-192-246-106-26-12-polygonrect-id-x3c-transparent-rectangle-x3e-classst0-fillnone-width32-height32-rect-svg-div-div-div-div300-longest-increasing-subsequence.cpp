@@ -29,7 +29,7 @@ public:
     int lengthOfLIS(std::vector<int>& nums) {
         int n = nums.size();
         // Initialize memoization table with -1
-        std::vector<std::vector<int>> memo(n , std::vector<int>(n + 1, -1));
+        std::vector<std::vector<int>> memo(n+1 , std::vector<int>(n + 1, -1));
 
         return solve(0 , -1, nums, memo);
     }
