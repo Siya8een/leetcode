@@ -1,34 +1,32 @@
-#include <unordered_map>
-#include <vector>
 #include <string>
-#include <algorithm>
+#include <map>
+#include <queue>
+
+using namespace std;
 
 class Solution {
 public:
-    std::string frequencySort(std::string s) {
-        std::unordered_map<char, int> mpp;
-        for (char ch : s) {
-            mpp[ch]++;
+    string frequencySort(string s) {
+        map<char,int> mpp;
+        for (int i=0; i< s.size(); i++)
+        {
+            mpp[s[i]]++;
         }
-        
-        std::vector<std::pair<char, int>> frequencyPairs;
-        for (auto it : mpp) {
-            frequencyPairs.push_back(it);
+        priority_queue<pair<int,char>>pq;
+        for(auto it:mpp){
+            pq.push({it.second,it.first});
         }
-        
-        // Custom sort based on frequency
-        std::sort(frequencyPairs.begin(), frequencyPairs.end(), 
-                  [](const std::pair<char, int>& a, const std::pair<char, int>& b) {
-                      return a.second > b.second; // Sort by frequency in descending order
-                  });
-        
-        std::string ans = "";
-        for (auto& pair : frequencyPairs) {
-            for (int i = 0; i < pair.second; ++i) {
-                ans.push_back(pair.first);
-            }
-        }
-        
-        return ans;
+        string ans="";
+         while(!pq.empty()){
+             auto it = pq.top();
+             pq.pop();
+             int x=it.first;
+             char ch=it.second;
+             
+             for(int i=0;i<x;i++){
+                 ans.push_back(ch);
+             }
+         }
+         return ans;
     }
 };
