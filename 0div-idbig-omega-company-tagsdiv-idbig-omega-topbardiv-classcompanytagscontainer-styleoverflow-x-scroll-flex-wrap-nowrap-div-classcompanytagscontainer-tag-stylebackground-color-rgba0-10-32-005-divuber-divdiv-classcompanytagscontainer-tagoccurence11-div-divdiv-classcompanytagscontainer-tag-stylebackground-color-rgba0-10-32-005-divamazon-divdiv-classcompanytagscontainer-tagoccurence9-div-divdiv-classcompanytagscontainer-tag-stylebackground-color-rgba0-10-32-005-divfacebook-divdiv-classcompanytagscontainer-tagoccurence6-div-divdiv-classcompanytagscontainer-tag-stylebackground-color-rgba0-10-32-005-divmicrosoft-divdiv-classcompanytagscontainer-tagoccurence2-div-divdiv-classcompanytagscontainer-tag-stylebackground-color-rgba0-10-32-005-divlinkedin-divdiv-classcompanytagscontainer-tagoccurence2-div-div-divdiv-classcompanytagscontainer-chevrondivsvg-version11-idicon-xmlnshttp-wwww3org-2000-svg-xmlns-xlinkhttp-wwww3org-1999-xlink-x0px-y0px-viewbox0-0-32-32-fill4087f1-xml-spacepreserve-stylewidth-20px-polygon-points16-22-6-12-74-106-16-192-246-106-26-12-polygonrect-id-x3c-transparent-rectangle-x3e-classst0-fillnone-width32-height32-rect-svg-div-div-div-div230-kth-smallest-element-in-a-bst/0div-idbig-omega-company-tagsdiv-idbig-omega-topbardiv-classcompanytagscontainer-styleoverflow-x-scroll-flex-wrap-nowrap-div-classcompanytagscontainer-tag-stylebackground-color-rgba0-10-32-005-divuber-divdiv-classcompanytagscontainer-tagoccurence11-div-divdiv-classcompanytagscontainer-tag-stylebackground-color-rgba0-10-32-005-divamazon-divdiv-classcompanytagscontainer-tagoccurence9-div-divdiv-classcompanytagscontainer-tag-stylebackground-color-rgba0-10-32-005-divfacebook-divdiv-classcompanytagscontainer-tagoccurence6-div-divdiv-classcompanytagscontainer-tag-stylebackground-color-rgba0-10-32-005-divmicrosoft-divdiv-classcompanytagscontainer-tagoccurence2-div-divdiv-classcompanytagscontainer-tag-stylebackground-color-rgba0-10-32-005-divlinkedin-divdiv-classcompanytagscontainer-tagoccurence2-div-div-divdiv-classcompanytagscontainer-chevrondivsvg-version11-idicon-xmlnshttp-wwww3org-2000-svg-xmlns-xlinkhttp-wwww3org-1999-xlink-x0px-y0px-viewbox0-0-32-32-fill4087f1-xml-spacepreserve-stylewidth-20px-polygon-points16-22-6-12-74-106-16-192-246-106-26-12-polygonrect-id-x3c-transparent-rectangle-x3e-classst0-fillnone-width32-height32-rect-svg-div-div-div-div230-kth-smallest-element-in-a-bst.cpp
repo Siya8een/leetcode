@@ -1,20 +1,26 @@
+#include <stack>
+
 class Solution {
 public:
-    std::vector<int> ans;
-
-    void inorderTraversal(TreeNode* root) {
-        if (root == nullptr) {
-            return;
-        }
-
-        inorderTraversal(root->left);
-        ans.push_back(root->val);
-        inorderTraversal(root->right);
-    }
-
     int kthSmallest(TreeNode* root, int k) {
-        ans.clear();
-        inorderTraversal(root);
-        return ans[k - 1];
+        std::stack<TreeNode*> st;
+        TreeNode* current = root;
+        int count = 0;
+        
+        while (current != nullptr || !st.empty()) {
+            while (current != nullptr) {
+                st.push(current);
+                current = current->left;
+            }
+            current = st.top();
+            st.pop();
+            count++;
+            if (count == k) {
+                return current->val;
+            }
+            current = current->right;
+        }
+        
+        return -1; // Return -1 if kth smallest element is not found (this should not happen if k is valid)
     }
 };
