@@ -9,7 +9,7 @@ public:
                      ans[i][j]=ans[i-1][j-1]+ans[i-1][j];
                  }
          }
-        vector < int> answer ;
+        vector < int> answer (0,( rowIndex,0));
         for ( int i =0; i <rowIndex+1;i++){
             answer.push_back(ans[rowIndex][i]);
         }
