@@ -1,47 +1,39 @@
 class Solution {
 public:
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>> adj(numCourses); // Initialize adjacency list
-
-        for (const vector<int>& prereq : prerequisites) {
-            adj[prereq[1]].push_back(prereq[0]);
-        }
-
-        vector<int> indegree(numCourses, 0);
-
-        // Calculate indegrees for each course
-        for (int i = 0; i < numCourses; i++) {
-            for (int course : adj[i]) {
-                indegree[course]++;
+    bool dfs(vector<int>& visited, vector<vector<int>>& adjlist, int index) {
+        visited[index] = 1;  // Mark the current node as visiting (1)
+        
+        for (int neighbor : adjlist[index]) {
+            if (visited[neighbor] == 1) {
+                return false;  // Found a cycle
             }
-        }
-
-        queue<int> q;
-
-        // Add courses with indegree 0 to the queue
-        for (int i = 0; i < numCourses; i++) {
-            if (indegree[i] == 0) {
-                q.push(i);
-            }
-        }
-
-        vector<int> ans;
-
-        while (!q.empty()) {
-            int node = q.front();
-            q.pop();
-
-            ans.push_back(node);
-
-            for (int course : adj[node]) {
-                indegree[course]--;
-
-                if (indegree[course] == 0) {
-                    q.push(course);
+            if (visited[neighbor] == 0) {
+                if (!dfs(visited, adjlist, neighbor)) {
+                    return false;  // Cycle detected in the recursive call
                 }
             }
         }
-
-        return ans.size() == numCourses;
+        
+        visited[index] = 2;  // Mark the current node as visited (2)
+        return true;
+    }
+    
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> adjlist(numCourses);
+        for (auto& pre : prerequisites) {
+            adjlist[pre[1]].push_back(pre[0]);
+        }
+        
+        vector<int> visited(numCourses, 0);  // 0: unvisited, 1: visiting, 2: visited
+        
+        for (int i = 0; i < numCourses; ++i) {
+            if (visited[i] == 0) {
+                if (!dfs(visited, adjlist, i)) {
+                    return false;  // Cycle detected
+                }
+            }
+        }
+        
+        return true;  // No cycles detected, all courses can be finished
     }
 };
