@@ -1,29 +1,31 @@
+#include <vector>
+using namespace std;
+
 class Solution {
 public:
-    void solve(vector<vector<int>>& ans, int index, vector<int>& combo, vector<int>& candidates, int target) {
+    void solve(vector<int>& a, vector<vector<int>>& ans, int i, vector<int>& candidates, int target) {
         if (target == 0) {
-            ans.push_back(combo);
+            ans.push_back(a);
+            return;
+        }
+        if (i >= candidates.size() || target < 0) {
             return;
         }
 
-        if (index == candidates.size() || target < 0) {
-            return;
-        }
+        // Take the current candidate
+        a.push_back(candidates[i]);
+        solve(a, ans, i, candidates, target - candidates[i]);
+        a.pop_back();
 
-        // Include the current candidate and make a recursive call
-        combo.push_back(candidates[index]);
-        solve(ans, index, combo, candidates, target - candidates[index]);
-
-        // Exclude the current candidate and make a recursive call
-        combo.pop_back();
-        solve(ans, index + 1, combo, candidates, target);
+        // Don't take the current candidate
+        solve(a, ans, i + 1, candidates, target);
     }
 
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> a;
         vector<vector<int>> ans;
-        vector<int> combo;
         int index = 0;
-        solve(ans, index, combo, candidates, target);
+        solve(a, ans, index, candidates, target);
         return ans;
     }
 };
