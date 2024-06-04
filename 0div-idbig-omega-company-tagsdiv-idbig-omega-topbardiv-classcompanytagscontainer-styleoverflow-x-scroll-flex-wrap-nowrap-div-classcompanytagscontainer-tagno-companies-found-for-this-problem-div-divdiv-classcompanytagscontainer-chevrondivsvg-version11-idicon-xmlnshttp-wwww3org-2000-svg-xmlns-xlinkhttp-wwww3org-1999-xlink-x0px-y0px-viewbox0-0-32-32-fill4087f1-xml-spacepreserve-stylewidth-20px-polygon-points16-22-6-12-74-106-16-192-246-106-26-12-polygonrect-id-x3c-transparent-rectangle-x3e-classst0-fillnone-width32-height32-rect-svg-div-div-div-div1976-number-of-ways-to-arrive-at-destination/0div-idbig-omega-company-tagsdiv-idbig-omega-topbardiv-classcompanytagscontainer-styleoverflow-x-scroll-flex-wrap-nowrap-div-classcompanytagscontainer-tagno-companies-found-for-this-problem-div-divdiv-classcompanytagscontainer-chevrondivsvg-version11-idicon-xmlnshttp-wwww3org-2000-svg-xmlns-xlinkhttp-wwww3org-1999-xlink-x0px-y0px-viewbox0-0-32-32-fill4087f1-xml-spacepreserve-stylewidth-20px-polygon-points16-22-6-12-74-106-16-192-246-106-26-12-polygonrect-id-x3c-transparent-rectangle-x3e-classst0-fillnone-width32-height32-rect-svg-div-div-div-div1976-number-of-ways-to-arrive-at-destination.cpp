@@ -5,6 +5,7 @@
 class Solution {
 public:
     int countPaths(int n, std::vector<std::vector<int>>& roads) {
+  
         std::vector<std::vector<std::pair<int, int>>> adj(n);
 
         for (const auto& it : roads) {
